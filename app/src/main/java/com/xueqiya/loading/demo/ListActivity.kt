@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,23 +15,32 @@ import com.xueqiya.loading.LoadingLayout.Companion.wrap
 
 class ListActivity : AppCompatActivity() {
     private var mCount = 10
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
-        val list = findViewById<RecyclerView>(R.id.list)
-        list.layoutManager = LinearLayoutManager(this)
-        list.adapter = adapter
-        val loading = wrap(list)
-        loading.showContent()
-        loading.setRetryListener(View.OnClickListener { v ->
-            Toast.makeText(v.context, "retry", Toast.LENGTH_LONG).show()
-        })
+        initView()
+        initLoading()
+    }
+
+    private fun initView() {
+        recyclerView = findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
         val refresh = findViewById<SwipeRefreshLayout>(R.id.refresh)
         refresh.setOnRefreshListener {
             mCount += 10
-            list.adapter!!.notifyDataSetChanged()
+            adapter.notifyItemRangeChanged(mCount, mCount + 10)
             refresh.isRefreshing = false
+        }
+    }
+
+    private fun initLoading() {
+        val loading = wrap(recyclerView)
+        loading.showContent()
+        loading.setRetryListener {
+            Toast.makeText(this, "retry", Toast.LENGTH_LONG).show()
         }
     }
 

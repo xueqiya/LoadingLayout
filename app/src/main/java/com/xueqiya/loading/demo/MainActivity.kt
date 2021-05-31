@@ -16,13 +16,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        findViewById<View>(R.id.list).setOnClickListener(this)
-        findViewById<View>(R.id.another).setOnClickListener(this)
+        initView()
+        initLoading()
+    }
+
+    private fun initView() {
+        val recyclerView = findViewById<View>(R.id.recycler_view)
+        val xml = findViewById<View>(R.id.xml)
+        recyclerView.setOnClickListener(this)
+        xml.setOnClickListener(this)
+    }
+
+    private fun initLoading() {
         loading = wrap(this)
-        loading.showContent()
-        loading.setRetryListener(View.OnClickListener { v ->
-            Toast.makeText(v.context, "retry", Toast.LENGTH_LONG).show()
-        })
+        loading.setRetryListener {
+            Toast.makeText(this, "retry", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -53,11 +62,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when (v.id) {
-            R.id.list -> startActivity(Intent(v.context, ListActivity::class.java))
+        val cls = when (v.id) {
+            R.id.recycler_view -> ListActivity::class.java
+            R.id.xml -> XmlActivity::class.java
+            else -> throw Exception("class is can not be null")
         }
-        when (v.id) {
-            R.id.another -> startActivity(Intent(v.context, LoadingActivity::class.java))
-        }
+        startActivity(Intent(this, cls))
     }
 }

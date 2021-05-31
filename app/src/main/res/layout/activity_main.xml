@@ -3,23 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="20dp">
+    android:padding="15dp">
 
-    <TextView
-        android:id="@+id/list"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:text="List" />
+        android:text="recycler_view" />
 
-    <TextView
-        android:id="@+id/another"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/xml"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:text="Another" />
+        android:text="xml" />
 </LinearLayout>

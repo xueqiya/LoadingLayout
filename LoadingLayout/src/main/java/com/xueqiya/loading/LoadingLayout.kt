@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import java.util.*
 
@@ -22,15 +23,26 @@ class LoadingLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.styleLoadingLayout
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     companion object {
-        fun wrap(activity: Activity): LoadingLayout {
-            return wrap((activity.findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0))
+        @JvmStatic
+        fun wrap(activity: Activity?): LoadingLayout {
+            if (activity == null) {
+                throw RuntimeException("content activity can not be null")
+            }
+            val viewGroup = activity.findViewById<View>(android.R.id.content) as ViewGroup
+            val view = viewGroup.getChildAt(0)
+            return wrap(view)
         }
 
-        fun wrap(fragment: Fragment): LoadingLayout {
-            return wrap(fragment.view)
+        @JvmStatic
+        fun wrap(fragment: Fragment?): LoadingLayout {
+            if (fragment == null) {
+                throw RuntimeException("content fragment can not be null")
+            }
+            val view = fragment.view
+            return wrap(view)
         }
 
         @JvmStatic
@@ -221,8 +233,7 @@ class LoadingLayout @JvmOverloads constructor(
         addView(layout)
         mLayouts[layoutId] = layout
         if (layoutId == mEmptyResId) {
-            val img =
-                    layout.findViewById<ImageView>(R.id.empty_image)
+            val img = layout.findViewById<ImageView>(R.id.empty_image)
             if (img != null && mEmptyImageResId != View.NO_ID) {
                 img.setImageResource(mEmptyImageResId)
             }
@@ -245,11 +256,7 @@ class LoadingLayout @JvmOverloads constructor(
                 btn.text = mRetryText
                 btn.setTextColor(mButtonTextColor)
                 btn.setTextSize(TypedValue.COMPLEX_UNIT_PX, mButtonTextSize.toFloat())
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    btn.background = mButtonBackground
-                } else {
-                    btn.setBackgroundDrawable(mButtonBackground)
-                }
+                btn.background = mButtonBackground
                 btn.setOnClickListener(mRetryButtonClickListener)
             }
             if (mOnErrorInflateListener != null) {
@@ -270,8 +277,7 @@ class LoadingLayout @JvmOverloads constructor(
 
     private fun image(layoutId: Int, ctrlId: Int, resId: Int) {
         if (mLayouts.containsKey(layoutId)) {
-            val view =
-                    mLayouts[layoutId]!!.findViewById<ImageView>(ctrlId)
+            val view = mLayouts[layoutId]!!.findViewById<ImageView>(ctrlId)
             view?.setImageResource(resId)
         }
     }
