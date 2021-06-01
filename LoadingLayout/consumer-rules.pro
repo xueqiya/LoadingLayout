@@ -1,0 +1,2 @@
+-keep class com.xueqiya.loading.** { *; }
+-dontwarn com.xueqiya.loading.**

@@ -12,17 +12,33 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    buildTypes {
+
+    signingConfigs {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            storeFile file('../debug_key.keystore')
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456"
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
     }
-}
 
-repositories {
-    maven { url "https://jitpack.io" }
-    mavenCentral()
+    buildTypes {
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
 }
 
 dependencies {
@@ -35,4 +51,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0'
 
     implementation project(':LoadingLayout')
+//    implementation 'io.github.xueqiya:LoadingLayout:1.0.0'
 }
