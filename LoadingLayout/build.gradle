@@ -1,6 +1,9 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
 
+ext.versionName = "1.0.1"
 android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
@@ -9,7 +12,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0.0"
+        versionName versionName
     }
 
     buildTypes {
@@ -47,6 +50,6 @@ ext {
     artifact = 'LoadingLayout'
     libraryName = 'LoadingLayout'
     libraryDescription = '简单实用的页面多状态布局(content,loading,empty,error)'
-    libraryVersion = '1.0.0'
+    libraryVersion = versionName
 }
 apply from: '../maven-publish.gradle'
