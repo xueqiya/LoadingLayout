@@ -3,14 +3,12 @@ package com.xueqiya.loading
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
@@ -57,7 +55,6 @@ class LoadingLayout @JvmOverloads constructor(
             val layout = LoadingLayout(view.context)
             parent.addView(layout, index, lp)
             layout.addView(view)
-            layout.setContentView(view)
             return layout
         }
     }
@@ -67,8 +64,6 @@ class LoadingLayout @JvmOverloads constructor(
     private var mErrorImageResId: Int
     private var mRetryText: CharSequence
     private var mRetryListener: OnClickListener? = null
-    private var mOnEmptyInflateListener: OnInflateListener? = null
-    private var mOnErrorInflateListener: OnInflateListener? = null
     private var mTextColor: Int
     private var mTextSize: Int
     private var mButtonTextColor: Int
@@ -108,21 +103,13 @@ class LoadingLayout @JvmOverloads constructor(
             removeViews(1, childCount - 1)
         }
         val view = getChildAt(0)
-        setContentView(view)
+        mContentId = view.id
+        mLayouts[mContentId] = view
         pageState = State.CONTENT
-    }
-
-    interface OnInflateListener {
-        fun onInflate(inflated: View?)
     }
 
     private var mRetryButtonClickListener = OnClickListener { v ->
         mRetryListener?.onClick(v)
-    }
-
-    private fun setContentView(view: View) {
-        mContentId = view.id
-        mLayouts[mContentId] = view
     }
 
     fun setLoading(@LayoutRes id: Int): LoadingLayout {
@@ -137,22 +124,6 @@ class LoadingLayout @JvmOverloads constructor(
         if (mEmptyResId != id) {
             remove(mEmptyResId)
             mEmptyResId = id
-        }
-        return this
-    }
-
-    fun setOnEmptyInflateListener(listener: OnInflateListener): LoadingLayout {
-        mOnEmptyInflateListener = listener
-        if (mOnEmptyInflateListener != null && mLayouts.containsKey(mEmptyResId)) {
-            listener.onInflate(mLayouts[mEmptyResId])
-        }
-        return this
-    }
-
-    fun setOnErrorInflateListener(listener: OnInflateListener): LoadingLayout {
-        mOnErrorInflateListener = listener
-        if (mOnErrorInflateListener != null && mLayouts.containsKey(mErrorResId)) {
-            listener.onInflate(mLayouts[mErrorResId])
         }
         return this
     }
@@ -243,9 +214,6 @@ class LoadingLayout @JvmOverloads constructor(
                 view.setTextColor(mTextColor)
                 view.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize.toFloat())
             }
-            if (mOnEmptyInflateListener != null) {
-                mOnEmptyInflateListener!!.onInflate(layout)
-            }
         } else if (layoutId == mErrorResId) {
             val img = layout.findViewById<ImageView>(R.id.error_image)
             if (img != null && mErrorImageResId != View.NO_ID) {
@@ -258,9 +226,6 @@ class LoadingLayout @JvmOverloads constructor(
                 btn.setTextSize(TypedValue.COMPLEX_UNIT_PX, mButtonTextSize.toFloat())
                 btn.background = mButtonBackground
                 btn.setOnClickListener(mRetryButtonClickListener)
-            }
-            if (mOnErrorInflateListener != null) {
-                mOnErrorInflateListener!!.onInflate(layout)
             }
         }
         return layout

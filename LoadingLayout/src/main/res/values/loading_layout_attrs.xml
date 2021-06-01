@@ -1,32 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="empty_image" type="id" />
-    <item name="empty_text" type="id" />
-
-    <item name="error_image" type="id" />
-    <item name="retry_button" type="id" />
-
-    <attr name="styleLoadingLayout" format="reference" />
-
-    <style name="LoadingLayout" />
-
-    <style name="LoadingLayout.Style">
-        <item name="llEmptyResId">@layout/loading_layout_empty</item>
-        <item name="llLoadingResId">@layout/loading_layout_loading</item>
-        <item name="llErrorResId">@layout/loading_layout_error</item>
-
-        <item name="llTextColor">#999999</item>
-        <item name="llTextSize">16sp</item>
-
-        <item name="llButtonTextColor">#999999</item>
-        <item name="llButtonTextSize">16sp</item>
-        <item name="llButtonBackground">@drawable/loading_layout_button</item>
-
-        <item name="llEmptyImage">@mipmap/empty</item>
-        <item name="llEmptyText">暂无数据</item>
-        <item name="llErrorImage">@mipmap/error</item>
-        <item name="llRetryText">加载失败，点击重试~~</item>
-    </style>
 
     <declare-styleable name="LoadingLayout">
         <!-- 空布局资源id -->

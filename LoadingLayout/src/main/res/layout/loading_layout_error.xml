@@ -10,11 +10,11 @@
 
     <ImageView
         android:id="@id/error_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:src="@mipmap/error" />
+        android:src="@drawable/error" />
 
     <TextView
         android:id="@id/retry_button"
