@@ -1,4 +1,4 @@
-# LoadingLayout [![](https://jitpack.io/v/czy1121/loadinglayout.svg)](https://jitpack.io/#czy1121/loadinglayout)
+# LoadingLayout
  
 简单实用的页面多状态布局(content,loading,empty,error)  
  
@@ -9,10 +9,10 @@
 
 ``` groovy
 repositories { 
-    maven { url "https://jitpack.io" }
+    mavenCentral()
 } 
 dependencies {
-    compile 'com.github.xueqiya:loadinglayout:1.0.0'
+    implementation 'io.github.xueqiya:LoadingLayout:1.0.1'
 }
 ```
     
