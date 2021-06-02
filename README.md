@@ -12,7 +12,7 @@ repositories {
     mavenCentral()
 } 
 dependencies {
-    implementation 'io.github.xueqiya:LoadingLayout:1.0.1'
+    implementation 'io.github.xueqiya:LoadingLayout:1.0.3'
 }
 ```
     

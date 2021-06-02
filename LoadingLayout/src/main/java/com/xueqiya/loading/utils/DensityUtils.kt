@@ -1,8 +1,8 @@
-package com.xueqiya.loading
+package com.xueqiya.loading.utils
 
 import android.content.Context
 
-object DensityUtils {
+internal object DensityUtils {
 
     fun dip2px(mContext: Context, dpValue: Float): Int {
         val scale = mContext.resources.displayMetrics.density

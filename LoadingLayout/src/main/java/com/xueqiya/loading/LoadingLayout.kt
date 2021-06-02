@@ -15,6 +15,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import com.xueqiya.loading.utils.DensityUtils
 import java.util.*
 
 class LoadingLayout @JvmOverloads constructor(
@@ -55,6 +56,7 @@ class LoadingLayout @JvmOverloads constructor(
             val layout = LoadingLayout(view.context)
             parent.addView(layout, index, lp)
             layout.addView(view)
+            layout.setContentView(view)
             return layout
         }
     }
@@ -103,13 +105,13 @@ class LoadingLayout @JvmOverloads constructor(
             removeViews(1, childCount - 1)
         }
         val view = getChildAt(0)
-        mContentId = view.id
-        mLayouts[mContentId] = view
+        setContentView(view)
         pageState = State.CONTENT
     }
 
-    private var mRetryButtonClickListener = OnClickListener { v ->
-        mRetryListener?.onClick(v)
+    private fun setContentView(view: View) {
+        mContentId = view.id
+        mLayouts[mContentId] = view
     }
 
     fun setLoading(@LayoutRes id: Int): LoadingLayout {
@@ -128,8 +130,11 @@ class LoadingLayout @JvmOverloads constructor(
         return this
     }
 
-    fun setRetryListener(listener: OnClickListener?): LoadingLayout {
-        mRetryListener = listener
+    fun setError(@LayoutRes id: Int): LoadingLayout {
+        if (mErrorResId != id) {
+            remove(mErrorResId)
+            mErrorResId = id
+        }
         return this
     }
 
@@ -245,5 +250,14 @@ class LoadingLayout @JvmOverloads constructor(
             val view = mLayouts[layoutId]!!.findViewById<ImageView>(ctrlId)
             view?.setImageResource(resId)
         }
+    }
+
+    private var mRetryButtonClickListener = OnClickListener { v ->
+        mRetryListener?.onClick(v)
+    }
+
+    fun setRetryListener(listener: OnClickListener?): LoadingLayout {
+        mRetryListener = listener
+        return this
     }
 }
