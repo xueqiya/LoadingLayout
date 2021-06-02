@@ -27,8 +27,8 @@ dependencies {
 </style>
 
 <style name="LoadingLayoutStyle" parent="LoadingLayout.Style">
-    <item name="llEmptyImage">@mipmap/empty</item>
-    <item name="llErrorImage">@mipmap/error</item>
+    <item name="llEmptyImage">@drawable/empty</item>
+    <item name="llErrorImage">@drawable/error</item>
     ...
 </style>
 ```
@@ -36,7 +36,7 @@ dependencies {
 **用法一：在布局中使用**
 
 ``` xml  
-<ezy.ui.layout.LoadingLayout
+<com.xueqiya.loading.LoadingLayout
     android:id="@+id/loading"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -47,7 +47,7 @@ dependencies {
         android:gravity="center"
         android:text="This is Content"/>
         
-</ezy.ui.layout.LoadingLayout>
+</com.xueqiya.loading.LoadingLayout>
  
 ``` 
 
