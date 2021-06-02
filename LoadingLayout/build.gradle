@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
 }
 
-ext.versionName = "1.0.1"
+ext.versionName = "1.0.2"
 android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
@@ -17,7 +17,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
